@@ -1,4 +1,8 @@
 h1 Users
-a(href="/") Home 
+a(href="/") Home
+h1
+form(action="/users/search", method="GET") 
+	input(type="text", name="q", value=q)
+	button Search
 each user in users
 	li= user.name
