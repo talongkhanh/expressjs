@@ -1,6 +1,14 @@
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan')
+const low = require('lowdb')
+
+const FileSync = require('lowdb/adapters/FileSync')
+const adapter = new FileSync('db.json')
+const db = low(adapter)
+ 
+db.defaults({ users: [] })
+  .write()
 
 const app = express();
 const port = 3001;
@@ -8,10 +16,6 @@ const port = 3001;
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-const users = [
-			{ id: 1, name: 'Minh' },
-			{ id: 2, name: 'Nam' },
-];
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +29,7 @@ app.get('/', (req, res) => {
 
 app.get('/users', (req, res) => {
 	res.render('users/index', {
-		users: users,
+		users: db.get('users').value(),
 	});
 });
 
@@ -35,7 +39,7 @@ app.get('/users/create', (req, res) => {
 
 app.post('/users/create', (req, res) => {
 	if(req.body.name) {
-		users.push({ name: req.body.name });
+		db.get('users').push(req.body).write();
 	}
 	res.redirect('/users');
 });
@@ -43,7 +47,7 @@ app.post('/users/create', (req, res) => {
 app.get('/users/search', (req, res) => {
 	const q = req.query.q;
 	if(q) {
-		const matchedUsers = users.filter(user => {
+		const matchedUsers = db.get('users').value().filter(user => {
 		return user.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
 		});
 		res.render('users/index', {
