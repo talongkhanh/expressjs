@@ -1,14 +1,15 @@
 const express = require('express');
 const path = require('path');
-const morgan = require('morgan')
-const low = require('lowdb')
+const morgan = require('morgan');
+const low = require('lowdb');
+const shortId = require('shortid');
 
-const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('db.json')
-const db = low(adapter)
+const FileSync = require('lowdb/adapters/FileSync');
+const adapter = new FileSync('db.json');
+const db = low(adapter);
  
 db.defaults({ users: [] })
-  .write()
+  .write();
 
 const app = express();
 const port = 3001;
@@ -39,6 +40,7 @@ app.get('/users/create', (req, res) => {
 
 app.post('/users/create', (req, res) => {
 	if(req.body.name) {
+		req.body.id = shortId.generate();
 		db.get('users').push(req.body).write();
 	}
 	res.redirect('/users');
@@ -58,7 +60,14 @@ app.get('/users/search', (req, res) => {
 		res.redirect('/users');
 	}
 	
-})
+});
 
+app.get('/users/:userId', (req, res) => {
+	const id = req.params.userId;
+	const user = db.get('users').find({id: id}).value();
+	res.render('users/show', {
+		user: user,
+	});
+});
 
 app.listen(port, () => console.log('Server listen on port ', port));

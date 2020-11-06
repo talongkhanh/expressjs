@@ -1,10 +1,18 @@
-h1 Users
-a(href="/") Home
-br
-a(href="/users/create") Create user
-h1
-form(action="/users/search", method="GET") 
-	input(type="text", name="q", value=q)
-	button Search
-each user in users
-	li= user.name
+html
+	head
+		title Hello
+		meta(charset="utf-8")
+	body
+		h1 Users
+		a(href="/") Home
+		br
+		a(href="/users/create") Create user
+		h1
+		form(action="/users/search", method="GET") 
+			input(type="text", name="q", value=q)
+			button Search
+		each user in users
+			li
+				span= user.name
+				button 
+					a(href="/users/" + user.id)   View
