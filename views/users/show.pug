@@ -1,2 +1,10 @@
-strong Name: 
-span #{user.name}
+extends ../layouts/main
+block content
+	h1.mt-5 About
+	table.table.table-bordered
+			thead
+				tr
+					th Name
+			tbody
+				tr
+					td #{user.name}

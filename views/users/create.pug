@@ -1,5 +1,8 @@
-h1 Create user
-form(action="/users/create", method="POST")
-	label Name
-	input(name="name")
-	button Create
+extends ../layouts/main
+block content
+	h1.mt-5 Create user
+	form(action="/users/create", method="POST")
+		.form-group
+			label(for='name') Name:
+			input#name.form-control(type='text', placeholder='Enter Name', name='name')
+		button.btn.btn-primary(type='submit') Create

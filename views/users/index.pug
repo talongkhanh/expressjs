@@ -1,18 +1,20 @@
-html
-	head
-		title Hello
-		meta(charset="utf-8")
-	body
-		h1 Users
-		a(href="/") Home
-		br
-		a(href="/users/create") Create user
-		h1
-		form(action="/users/search", method="GET") 
-			input(type="text", name="q", value=q)
-			button Search
-		each user in users
-			li
-				span= user.name
-				button 
-					a(href="/users/" + user.id)   View
+extends ../layouts/main
+block content
+	.d-flex.align-item-center.justify-content-between.mt-5
+		a.btn.btn-primary(href="/users/create") Create user
+		form.form-inline(action="/users/search", method="GET") 
+			input.form-control(type="text", name="q", value=q)
+			button.btn.btn-success.ml-5 Search
+	h1.mt-5 Users list
+	.list-user.mt-5
+		table.table.table-bordered
+			thead
+				tr
+					th Name
+					th Action
+			tbody
+				each user in users
+					tr
+						td= user.name
+						td 
+							a(href="/users/" + user.id) View

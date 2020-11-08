@@ -19,7 +19,7 @@ class UserController {
 			req.body.id = shortId.generate();
 			db.get('users').push(req.body).write();
 		}
-		res.redirect('/');
+		res.redirect('/users');
 	}
 
 	search(req, res) {
@@ -33,7 +33,7 @@ class UserController {
 				q: q,
 			});
 		} else {
-			res.redirect('/');
+			res.redirect('/users');
 		}
 		
 	}

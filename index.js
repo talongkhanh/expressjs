@@ -16,13 +16,4 @@ app.set('views', path.join(__dirname, 'views'));
 
 route(app);
 
-app.get('/', (req, res) => {
-	res.render('index', { 
-		name: 'Khanh', 
-		age: 20,
-	});
-});
-
-
-
-app.listen(port, () => console.log('Server listen on port ', port));
+app.listen(port);
