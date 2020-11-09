@@ -11,10 +11,12 @@ block content
 			thead
 				tr
 					th Name
+					th Phone
 					th Action
 			tbody
 				each user in users
 					tr
 						td= user.name
+						td= user.phone
 						td 
-							a(href="/users/" + user.id) View
+							a.btn.btn-light(href="/users/" + user.id) View

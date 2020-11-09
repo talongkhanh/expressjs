@@ -15,10 +15,26 @@ class UserController {
 	}
 
 	store(req, res) {
-		if(req.body.name) {
-			req.body.id = shortId.generate();
-			db.get('users').push(req.body).write();
+		req.body.id = shortId.generate();
+		let errors = [];
+
+		if (!req.body.name) {
+			errors.push('Name is requires.');
 		}
+
+		if (!req.body.phone) {
+			errors.push('Phone is requires.');
+		}
+
+		if (errors.length) {
+			res.render('users/create', {
+				errors: errors,
+				formData: req.body,
+			});
+			return;
+		}
+
+		db.get('users').push(req.body).write();
 		res.redirect('/users');
 	}
 
