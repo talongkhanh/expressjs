@@ -2,9 +2,10 @@ extends ../layouts/main
 block content
 	h1.mt-5 About
 	table.table.table-bordered
-			thead
-				tr
-					th Name
-			tbody
-				tr
-					td #{user.name}
+		tr
+			th Name
+			th Phone
+		tr
+			td #{user.name}
+			td #{user.phone}
+
