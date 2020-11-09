@@ -1,10 +1,10 @@
 extends ../layouts/main
 block content
 	.d-flex.align-item-center.justify-content-between.mt-5
-		a.btn.btn-primary(href="/users/create") Create user
-		form.form-inline(action="/users/search", method="GET") 
+		a.btn.btn-primary(href='/users/create') Create user
+		form.form-inline(action='/users/search', method='GET') 
 			.form-group
-				input.form-control(type="text", name="q", value=q, placeholder="Search?")
+				input.form-control(type='text', name='q', value=q, placeholder='Search?')
 				button.btn.btn-success.ml-5 Search
 	h1.mt-5 Users list
 	.list-user.mt-5
@@ -18,4 +18,4 @@ block content
 					td= user.name
 					td= user.phone
 					td 
-						a.btn.btn-light(href="/users/" + user.id) View
+						a.btn.btn-light(href='/users/' + user.id) View
