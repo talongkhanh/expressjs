@@ -2,6 +2,8 @@
   "users": [
     {
       "name": "talongkhanh",
+      "email": "longkhanhta@gmail.com",
+      "password": "123456",
       "phone": "0971018194",
       "id": "ZuqgqR0JS"
     },
@@ -9,6 +11,11 @@
       "name": "Khanh",
       "phone": "12345678",
       "id": "bvSVbf0-J"
+    },
+    {
+      "name": "root",
+      "phone": "0987145555",
+      "id": "iKtYCq4Kk"
     }
   ]
 }

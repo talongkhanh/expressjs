@@ -1,6 +1,16 @@
 nav.navbar.navbar-expand-sm.bg-dark.navbar-dark
-  ul.navbar-nav
-    li.nav-item.active
-      a.nav-link(href='/') Home
-    li.nav-item
-      a.nav-link(href='/users') Users
+	.container
+		ul.navbar-nav
+			li.nav-item
+				a.nav-link(href='/') Yuno
+			li.nav-item
+				a.nav-link(href='/users') Users
+		ul.navbar-nav.ml-auto
+			if !hasLogin
+				li.nav-item.mx-auto
+					a.nav-link(href='/auth/login') Login
+			else
+				li.nav-item.dropdown.mx-auto
+					a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{userName}
+					.dropdown-menu
+						a.dropdown-item(href='/auth/logout') Logout

@@ -1,19 +1,19 @@
 const express = require('express');
 
-const userController = require('../controllers/UserController');
+const controller = require('../controllers/UserController');
 
 const validation = require('../validation/user');
 
 const router = express.Router();
 
-router.get('/create', userController.create);
+router.get('/create', controller.create);
 
-router.post('/create', validation.inputRequire, userController.store);
+router.post('/create', validation.inputRequire, controller.store);
 
-router.get('/search', userController.search);
+router.get('/search', controller.search);
 
-router.get('/:userId', userController.show);
+router.get('/:userId', controller.show);
 
-router.get('/', userController.index);
+router.get('/', controller.index);
 
 module.exports = router;
