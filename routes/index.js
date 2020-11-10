@@ -9,7 +9,7 @@ function route(app) {
 
 	app.use('/users', authMiddleware.requireAuth, userRouter);
 
-	app.use('/auth', authRouter);
+	app.use('/auth', authMiddleware.hasLogin, authRouter);
 	
 	app.use('/', authMiddleware.hasLogin, siteRouter);
 }
