@@ -1,6 +1,7 @@
 
 const db = require('../db');
 
+
 module.exports.requireAuth = function(req, res, next) {
 
 	if (!req.cookies.userId) {
@@ -15,7 +16,16 @@ module.exports.requireAuth = function(req, res, next) {
 		return;
 	}
 
-	res.locals.hasLogin = true;
-	res.locals.userName = user.email;
+	res.locals.user = user;
+	next();
+}
+
+module.exports.hasLogin = function(req, res, next) {
+	const user = db.get('users').find({id: req.cookies.userId}).value();
+
+	if(user) {
+		res.locals.user = user;
+		next();
+	}
 	next();
 }

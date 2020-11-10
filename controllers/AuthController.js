@@ -1,4 +1,6 @@
 
+const md5 = require('md5');
+
 const db = require('../db');
 
 class AuthController {
@@ -12,6 +14,8 @@ class AuthController {
 
 		const { email, password } = req.body;
 
+		const hashedPassword = md5(password);
+		
 		const user = db.get('users').find({ email }).value();
 
 		if (!user) {
@@ -24,7 +28,8 @@ class AuthController {
 			return;
 		}
 
-		if (password !== user.password) {
+
+		if (hashedPassword !== user.password) {
 			res.render('auth/login', {
 				errors: [
 					'Wrong password.'

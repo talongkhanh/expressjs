@@ -11,7 +11,7 @@ function route(app) {
 
 	app.use('/auth', authRouter);
 	
-	app.use('/', siteRouter);
+	app.use('/', authMiddleware.hasLogin, siteRouter);
 }
 
 module.exports = route;
