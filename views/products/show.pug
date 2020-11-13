@@ -10,30 +10,31 @@ block content
                         h5.card-title=product.name
                         p.card-text=product.description
                         a.btn.btn-primary(href='#') Add to cart
+
     .row.d-flex.justify-content-end.pr-3.pt-5.mb-5
         nav(aria-label='Page navigation example')
             ul.pagination.justify-content-center
-                if (page >1)
+                if (page >3)
                     li.page-item
-                        a.page-link(href=`/products?page=${prevPage}`) Previous
+                        a.page-link(href=`/products?page=${prevPage}`)
+                            span(aria-hidden='true') &laquo;
 
-                - var n = 0
-                - var m = totalPages
-                if page > 3
-                    - var n = page-3;
-                if page > 0 && page < totalPages - 2
-                    - var m = page + 2
-                while n < page -1
+                - var start = 0
+                - var number = page
+                - var end = totalPages
+                if number > 3
+                    - var start = number-3;
+                if number > 0 && number < totalPages - 2
+                    - var end = number + 2
+                while start < number -1
                     li.page-item
-                        a.page-link(href=`/products?page=${n+1}`)=++n
+                        a.page-link(href=`/products?page=${start+1}`)=++start
                 li.page-item.active
-                    a.page-link(href=`#`)=page
-                while page < m
+                    a.page-link(href=`#`)=number
+                while number < end
                     li.page-item
-                        a.page-link(href=`/products?page=${page+1}`)=++page
-                if (page < totalPages)
+                        a.page-link(href=`/products?page=${number+1}`)=++number
+                if page < totalPages-2
                     li.page-item
-                        a.page-link(href=`/products?page=${nextPage}`) Next
-
-
-
+                        a.page-link(href=`/products?page=${nextPage}`)
+                            span(aria-hidden='true') &raquo;
