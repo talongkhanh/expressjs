@@ -32,5 +32,5 @@ module.exports.checkLogin = function(req, res, next) {
 		return;
 	}
 	res.cookie('userId', user.id, { signed: true });
-	res.redirect('/users');
+	res.redirect('/books');
 }

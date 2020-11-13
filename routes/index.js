@@ -1,5 +1,5 @@
 
-const userRouter = require('./user');
+const bookRouter = require('./book');
 const siteRouter = require('./site');
 const authRouter = require('./auth');
 const productRouter = require('./product');
@@ -8,7 +8,7 @@ const authMiddleware = require('../middlewares/auth');
 
 function route(app) {
 
-	app.use('/users', authMiddleware.requireAuth, userRouter);
+	app.use('/books', authMiddleware.requireAuth, bookRouter);
 
 	app.use('/products', productRouter);
 

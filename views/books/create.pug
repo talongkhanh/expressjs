@@ -1,0 +1,17 @@
+extends ../layouts/main
+block content
+	h1.mt-5 Add Book
+	if errors
+		each error in errors
+			.alert.alert-danger= error
+	form(action='/books/create' method='POST' enctype='multipart/form-data')
+		.form-group
+			label(for='name') Name:
+			input#name.form-control(type='text' name='name', value=formData?formData.name:'')
+		.form-group
+			label(for='author') Author:
+			input#author.form-control(type='text' name='author', value=formData?formData.phone:'')
+		.form-group
+			label Image:
+			<input type="file" class="form-control-file" name='image'>
+		button.btn.btn-primary(type='submit') Add

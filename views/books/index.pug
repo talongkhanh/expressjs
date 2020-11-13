@@ -1,0 +1,28 @@
+extends ../layouts/main
+block content
+	.d-flex.align-item-center.justify-content-between.mt-5
+		a.btn.btn-primary(href='/books/create') Add new book
+		form.form-inline(action='/books/search' method='GET') 
+			.form-group
+				input.form-control(type='text' name='q', value=q, placeholder='Search?')
+				button.btn.btn-success.ml-5 Search
+	h1.mt-5 books list
+	.list-user.mt-5
+		table.table.table-bordered
+			tr
+				th #
+				th Image
+				th Name
+				th Author
+				th Action
+			each book, index in books
+				tr
+					td= index+1
+					td.pl-5
+						img(src=book.image, width='42px')
+					td= book.name
+					td= book.author
+					td 
+						a.btn.btn-light(href='/books/' + book.id) View
+						a.mr-3.ml-3.btn.btn-info(href='/books/' + book.id) Edit
+						a.btn.btn-danger(href='/books/' + book.id) Delete
