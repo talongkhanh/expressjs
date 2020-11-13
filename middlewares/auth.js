@@ -32,5 +32,5 @@ module.exports.hasLogin = function(req, res, next) {
 		next();
 		return;
 	}
-	next();
+	next(); 
 }

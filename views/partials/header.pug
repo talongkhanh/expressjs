@@ -1,17 +1,20 @@
-
 nav.navbar.navbar-expand-sm.bg-dark.navbar-dark
 	.container
-		ul.navbar-nav
-			li.nav-item
-				a.nav-link(href='/') Yuno
-			li.nav-item
-				a.nav-link(href='/users') Users
-		ul.navbar-nav.ml-auto
-			if !user
-				li.nav-item.mx-auto
-					a.nav-link(href='/auth/login') Login
-			else
-				li.nav-item.dropdown.mx-auto
-					a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.email}
-					.dropdown-menu
-						a.dropdown-item(href='/auth/logout') Logout
+		a.navbar-brand(href='/') Yuno
+		button.navbar-toggler(data-toggle='collapse', data-target='#collapsibleNavbar')
+			span.navbar-toggler-icon
+		.collapse.navbar-collapse#collapsibleNavbar
+			ul.navbar-nav.mr-auto
+				li.nav-item
+					a.nav-link(href='/users') Users
+			ul.navbar-nav.ml-auto
+				if !user
+					li.nav-item
+						a.nav-link(href='/auth/login') Login
+					li.nav-item
+						a.nav-link(href='/auth/signup') Signup
+				else
+					li.nav-item.dropdown
+						a.nav-link.dropdown-toggle(href='#', data-toggle='dropdown') #{user.email}
+						.dropdown-menu
+							a.dropdown-item(href='/auth/logout') Logout

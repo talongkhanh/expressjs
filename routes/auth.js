@@ -13,5 +13,10 @@ router.post('/login', validation.checkLogin);
 
 router.get('/logout', controller.logout);
 
+router.get('/signup', controller.signup);
+
+router.post('/signup', controller.store);
+
+
 
 module.exports = router;
