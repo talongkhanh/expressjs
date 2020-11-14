@@ -4,11 +4,11 @@ block content
 	if errors
 		each error in errors
 			.alert.alert-danger= error
-	form(action='/auth/login', method='POST')
+	form(action='/auth/login' method='POST')
 		.form-group
 			label(for='email') Email:
-			input#email.form-control(type='email', name='email', value=formData?formData.email:'')
+			input#email.form-control(type='email' name='email', value=formData?formData.email:'')
 		.form-group
 			label(for='password') Password:
-			input#password.form-control(type='password', name='password', value=formData?formData.password:'')
+			input#password.form-control(type='password' name='password', value=formData?formData.password:'')
 		button.btn.btn-primary(type='submit') Login

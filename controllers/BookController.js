@@ -13,7 +13,9 @@ class BookController {
 	// [GET] /books/create
 	create(req, res) {
 
-		res.render('books/create');
+		res.render('books/create', { 
+			csrfToken: req.csrfToken() 
+		});
 	}
 	// [POST] /books/create
 	store(req, res) {

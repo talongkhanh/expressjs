@@ -1,5 +1,8 @@
 const express = require('express');
 const multer  = require('multer');
+var csrf = require('csurf') 
+
+var csrfProtection = csrf({ cookie: true })
 
 const upload = multer({ dest: 'public/uploads/' });
 
@@ -9,9 +12,9 @@ const validation = require('../validation/book');
 
 const router = express.Router();
 
-router.get('/create', controller.create);
+router.get('/create', csrfProtection, controller.create);
 
-router.post('/create', upload.single('image'), validation.inputRequire, controller.store);
+router.post('/create', upload.single('image'), validation.inputRequire ,csrfProtection, controller.store);
 
 router.get('/search', controller.search);
 

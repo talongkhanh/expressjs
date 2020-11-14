@@ -13,17 +13,22 @@ class CartController {
         .find({ id: SID })
         .set('cart.' + productId, count + 1)
         .write();
-        let record = db.get('sessions')
+        let cartItems = db.get('sessions')
         .find({id: req.signedCookies.sessionId})
-        .value();
-        let totalCount = 0;
-        let cartItems = record.cart;
-
+        .value()
+        .cart;
+        let items = [];
+        let counts = [];
         for(var i in cartItems) {
-            totalCount += cartItems[i];
+            items.push(db.get('products').find({id: i}).value());
+            counts.push(cartItems[i]);
         }
-        
-        res.json(totalCount);
+        let totalCount= counts.reduce((a, b) => a + b, 0);
+        res.json({items, counts, totalCount});
+    }
+
+    showCart(req, res) {
+        res.render('cart');
     }
 }
 

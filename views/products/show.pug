@@ -43,9 +43,14 @@ block content
                 url: "http://localhost:3001/cart/add/" + id,
                 method: 'GET'
             }).done(function(response) {
-                console.log(response);
                 $('#totalCount').empty();
-                $('#totalCount').html(`Cart(${response})`);
+
+                let items = response.items;
+                let counts = response.counts;
+                let totalCount = response.totalCount;
+                res.locals.items = items;
+                res.locals.counts = counts;
+                $('#cart').html(`Cart(${totalCount})`);
             });
         }
 

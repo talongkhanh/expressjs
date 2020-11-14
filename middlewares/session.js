@@ -17,7 +17,10 @@ module.exports = function(req, res, next) {
         .find({id: req.signedCookies.sessionId})
         .value();
     let totalCount = 0;
-    let cartItems = record.cart;
+    let cartItems
+    if(record) {
+        cartItems = record.cart;
+    }
 
     for(var i in cartItems) {
         totalCount += cartItems[i];
