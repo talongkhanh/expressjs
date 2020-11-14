@@ -3,12 +3,15 @@ const bookRouter = require('./book');
 const siteRouter = require('./site');
 const authRouter = require('./auth');
 const productRouter = require('./product');
+const cartRouter = require('./cart');
 
 const authMiddleware = require('../middlewares/auth');
 
 function route(app) {
 
 	app.use('/books', authMiddleware.requireAuth, bookRouter);
+
+	app.use('/cart', cartRouter);
 
 	app.use('/products', productRouter);
 

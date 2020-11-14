@@ -9,7 +9,7 @@ block content
                     .card-body
                         h5.card-title=product.name
                         p.card-text=product.description
-                        a.btn.btn-primary(href='#') Add to cart
+                        button.btn.btn-primary(onclick=`addCart('${product.id}')`) Add to cart
 
     .row.d-flex.justify-content-end.pr-3.pt-5.mb-5
         nav(aria-label='Page navigation example')
@@ -37,3 +37,15 @@ block content
                     li.page-item
                         a.page-link(href=`/products?page=${nextPage}`)
                             span(aria-hidden='true') &raquo;
+    script(type="text/javascript").
+        function addCart(id) {
+            $.ajax({
+                url: "http://localhost:3001/cart/add/" + id,
+                method: 'GET'
+            }).done(function(response) {
+                console.log(response);
+                $('#totalCount').empty();
+                $('#totalCount').html(`Cart(${response})`);
+            });
+        }
+
