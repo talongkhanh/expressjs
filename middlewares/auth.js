@@ -1,15 +1,14 @@
 
-const db = require('../db');
+const User = require('../models/User');
 
-
-module.exports.requireAuth = function(req, res, next) {
+module.exports.requireAuth = async function(req, res, next) {
 
 	if (!req.signedCookies.userId) {
 		res.redirect('/auth/login');
 		return;
 	}
 
-	const user = db.get('users').find({id: req.signedCookies.userId}).value();
+	const user = await User.findOne({_id: req.signedCookies.userId});
 
 	if(!user) {
 		res.redirect('/auth/login');
@@ -20,8 +19,8 @@ module.exports.requireAuth = function(req, res, next) {
 	next();
 }
 
-module.exports.hasLogin = function(req, res, next) {
-	const user = db.get('users').find({id: req.signedCookies.userId}).value();
+module.exports.hasLogin = async function(req, res, next) {
+	const user = await User.findOne({_id: req.signedCookies.userId});
 	const reqPath = req.url;
 	if(user) {
 		if(reqPath === '/login') {

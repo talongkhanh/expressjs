@@ -19,6 +19,6 @@ nav.navbar.navbar-expand-sm.bg-dark.navbar-dark
 						a.nav-link(href='/auth/signup') Signup
 				else
 					li.nav-item.dropdown
-						a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown') #{user.email}
+						a.nav-link.dropdown-toggle(href='#' data-toggle='dropdown') #{user.name}
 						.dropdown-menu
 							a.dropdown-item(href='/auth/logout') Logout

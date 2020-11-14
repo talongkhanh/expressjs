@@ -1,25 +1,26 @@
 
 const shortId = require('shortid');
 
-const db = require('../db');
+const Session = require('../models/Session');
 
-module.exports = function(req, res, next) {
+module.exports = async function(req, res, next) {
 
     const sessionId = shortId.generate();
 	if (!req.signedCookies.sessionId) {
-        res.cookie('sessionId', sessionId, { expires: new Date(Date.now() + 90000000), signed: true})
-        db.get('sessions').push({
-            id: sessionId
-        }).write();
+        res.cookie('sessionId', sessionId, 
+        { 
+            expires: new Date(Date.now() + 900000000), 
+            signed: true
+        })
+
+        Session.create({ sessionId: sessionId });
     }
     
-    let record = db.get('sessions')
-        .find({id: req.signedCookies.sessionId})
-        .value();
+    const session = await Session.findOne({ sessionId: req.signedCookies.sessionId});
     let totalCount = 0;
     let cartItems
-    if(record) {
-        cartItems = record.cart;
+    if(session) {
+        cartItems = session.cart;
     }
 
     for(var i in cartItems) {

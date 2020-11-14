@@ -1,15 +1,15 @@
 
 const md5 = require('md5');
 
-const db = require('../db');
+const User = require('../models/User');
 
-module.exports.checkLogin = function(req, res, next) {
+module.exports.checkLogin = async function(req, res, next) {
 
 	const { email, password } = req.body;
 
 	const hashedPassword = md5(password);
 	
-	const user = db.get('users').find({ email }).value();
+	const user = await User.findOne({ email });
 
 	if (!user) {
 		res.render('auth/login', {
@@ -21,7 +21,7 @@ module.exports.checkLogin = function(req, res, next) {
 		return;
 	}
 
-
+	console.log(user);
 	if (hashedPassword !== user.password) {
 		res.render('auth/login', {
 			errors: [

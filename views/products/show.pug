@@ -9,7 +9,7 @@ block content
                     .card-body
                         h5.card-title=product.name
                         p.card-text=product.description
-                        button.btn.btn-primary(onclick=`addCart('${product.id}')`) Add to cart
+                        button.btn.btn-primary(onclick=`addCart('${product._id}')`) Add to cart
 
     .row.d-flex.justify-content-end.pr-3.pt-5.mb-5
         nav(aria-label='Page navigation example')
@@ -40,17 +40,16 @@ block content
     script(type="text/javascript").
         function addCart(id) {
             $.ajax({
-                url: "http://localhost:3001/cart/add/" + id,
+                url: "/cart/add/" + id,
                 method: 'GET'
             }).done(function(response) {
                 $('#totalCount').empty();
-
-                let items = response.items;
-                let counts = response.counts;
-                let totalCount = response.totalCount;
-                res.locals.items = items;
-                res.locals.counts = counts;
-                $('#cart').html(`Cart(${totalCount})`);
+                let count = 0;
+                cartItems = response.cart;
+                for (i in cartItems) {
+                    count += cartItems[i];
+                }
+                $('#cart').html(`Cart(${count})`);
             });
         }
 

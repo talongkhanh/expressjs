@@ -1,8 +1,7 @@
 
 const md5 = require('md5');
-const shortId = require('shortid');
 
-const db = require('../db');
+const User = require('../models/User');
 
 class AuthController {
 
@@ -21,7 +20,7 @@ class AuthController {
 		res.render('auth/signup');
 	}
 
-	store(req, res) {
+	store(req, res, next) {
 		const errors = [];
 
 		if (!req.body.name) {
@@ -47,44 +46,55 @@ class AuthController {
 			});
 			return;
 		}
+
 		const { name, phone, email, password, confirmPassword } = req.body;
+
+		if (password !== confirmPassword) {
+			errors.push('Two password not match.');
+			res.render('auth/signup', {
+				errors: errors,
+				formData: req.body,
+			});
+			return;
+		}
 		
-		if (db.get('users').find({ email }).value()) {
-			res.render('auth/signup', {
-				errors: ['Email was exists.'],
-				formData: req.body,
+		function findUser() {
+			return User.findOne({ email: email })
+			  	.then(function(user) {
+					if (user) {
+						res.render('auth/signup', {
+							errors: ['Email already exists.'],
+							formData: req.body,
+						});
+					}
+				});
+		  }
+
+		findUser().then(function() {
+		return User.findOne({ phone: phone })
+			.then(function(user) {
+				if (user) {
+					res.render('auth/signup', {
+						errors: ['phone already exists.'],
+						formData: req.body,
+					});
+				}
 			});
-			return;
-		}
+		});
 
-		if (db.get('users').find({ phone }).value()) {
-			res.render('auth/signup', {
-				errors: ['Phone number was exists.'],
-				formData: req.body,
-			});
-			return;
-		}
-
-		if(password !== confirmPassword) {
-			res.render('auth/signup', {
-				errors: ['Two password not match.'],
-				formData: req.body,
-			});
-			return;
-		}
-
-		const newUser = {
-			name: name,
-			phone: phone,
-			email: email,
-			password: md5(password),
-			id: shortId.generate()
-		}
-		db.get('users').push(newUser).write();
-		res.redirect('/auth/login');
-
+		findUser().then(function() {
+			const newUser = {
+				name: name,
+				phone: phone,
+				email: email,
+				password: md5(password),
+			}
+			User.create(newUser);
+			res.redirect('/auth/login');		
+		}).catch(function(err) {
+			console.log(err.message);
+		});
 	}
-
 }
 
 module.exports = new AuthController;

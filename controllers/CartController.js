@@ -1,35 +1,35 @@
 
-const db= require('../db');
+const Session = require('../models/Session');
 
-class CartController {
+module.exports.addToCart = async function(req, res) {
 
-    addToCart(req, res) {
-        const productId = req.params.id;
-        const SID = req.signedCookies.sessionId;
-        let count = db.get('sessions')
-            .find({id: SID})
-            .get('cart.' + productId, 0);
-        db.get('sessions')
-        .find({ id: SID })
-        .set('cart.' + productId, count + 1)
-        .write();
-        let cartItems = db.get('sessions')
-        .find({id: req.signedCookies.sessionId})
-        .value()
-        .cart;
-        let items = [];
-        let counts = [];
-        for(var i in cartItems) {
-            items.push(db.get('products').find({id: i}).value());
-            counts.push(cartItems[i]);
+    const productId = req.params.id;
+    const SID = req.signedCookies.sessionId;
+    let document = await Session.findOne({ sessionId: SID });
+
+    let documentObject = document._doc;
+    if(!documentObject.cart) {
+        documentObject.cart = {}
+    }
+
+    let count = 0;
+    if(documentObject.cart) {
+        for (item in documentObject.cart) {
+            if(item == productId) {
+                count += documentObject.cart[item];
+                break;
+            }
         }
-        let totalCount= counts.reduce((a, b) => a + b, 0);
-        res.json({items, counts, totalCount});
     }
 
-    showCart(req, res) {
-        res.render('cart');
-    }
+    documentObject.cart[productId] = count + 1;
+
+    Session.findByIdAndUpdate({ _id: documentObject._id }, documentObject)
+        .then(() => res.json(documentObject));
+
 }
 
-module.exports = new CartController;
+module.exports.showCart = function(req, res) {
+    res.render('cart');
+}
+
