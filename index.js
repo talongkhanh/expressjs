@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 const path = require('path');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
@@ -19,7 +19,7 @@ const route = require('./routes');
 const app = express();
 const port = 3001;
 
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
