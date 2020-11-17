@@ -11,7 +11,6 @@ mongoose.connect(process.env.MONGO_URL, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
 })
-.then(() => console.log('Connected.'));
 
 const sessionMiddleware = require('./middlewares/session');
 
