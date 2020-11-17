@@ -13,7 +13,7 @@ function route(app) {
 
 	app.use('/cart', cartRouter);
 
-	app.use('/products', productRouter);
+	app.use('/products', authMiddleware.hasLogin, productRouter);
 
 	app.use('/auth', authMiddleware.hasLogin, authRouter);
 	
